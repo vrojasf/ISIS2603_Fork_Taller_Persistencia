@@ -40,7 +40,7 @@ public class PeliculaService {
             throw new IllegalArgumentException("Ya existe una película con ese título.");
         }
 
-        if (pelicula.getAnioLanzamiento() > 1930) {
+        if (pelicula.getAnioLanzamiento() < 1930) {
             throw new IllegalArgumentException("El año de lanzamiento no puede ser antes a 1930.");
         } else {
             return peliculaRepository.save(pelicula);

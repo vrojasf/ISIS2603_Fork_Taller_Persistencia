@@ -2,6 +2,7 @@ package co.edu.uniandes.dse.TallerPersistencia.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,7 @@ public class PeliculaServiceTest {
     }
 
     @Test
-    void createPelicul() throws IllegalOperationException {
+    void createPelicula() throws IllegalOperationException {
         PeliculaEntity newEntity = factory.manufacturePojo(PeliculaEntity.class);
 
         PeliculaEntity result = peliculaService.createPelicula(newEntity);
@@ -65,7 +66,20 @@ public class PeliculaServiceTest {
         assertEquals(newEntity.getTitulo(), entity.getTitulo());
 
         
+        
     }
+    @Test
+    void createPeliculaWithInvalidYear() {
+        PeliculaEntity newEntity = factory.manufacturePojo(PeliculaEntity.class);
+        newEntity.setAnioLanzamiento(1900); 
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            peliculaService.createPelicula(newEntity);
+        });
+
+        assertEquals("El año de lanzamiento esta mal.", exception.getMessage());
+    }
+
 
 }
 
